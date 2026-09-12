@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using GymTracker.Api.Middleware;
 using GymTracker.Application.Abstractions;
 using GymTracker.Application.Services;
@@ -64,7 +65,11 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

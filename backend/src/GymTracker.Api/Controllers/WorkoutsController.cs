@@ -19,7 +19,7 @@ public class WorkoutsController: ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<WorkoutDto>> GetAll()
+    public async Task<ActionResult<List<WorkoutDto>>> GetAll()
     {
         var workouts = await _workoutService.GetAllAsync(User.GetUserId());
 
