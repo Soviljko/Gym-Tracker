@@ -1,9 +1,12 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { WorkoutDto, WorkoutService } from '../../services/workout.service';
 import { AuthService } from '../../services/auth.service';
+
+type SortField = 'performedAt' | 'type' | 'durationMinutes' | 'calories' | 'intensity' | 'fatigue';
+type SortDirection = 'asc' | 'desc';
 
 @Component({
   selector: 'app-workouts',
@@ -17,6 +20,21 @@ export class WorkoutsComponent implements OnInit {
   errorMessage = signal('');
   isSubmitting = signal(false);
   form: FormGroup;
+
+  sortField = signal<SortField>('performedAt');
+  sortDirection = signal<SortDirection>('desc');
+
+  sortedWorkouts = computed(() => {
+    const field = this.sortField();
+    const direction = this.sortDirection();
+
+    return [...this.workouts()].sort((a, b) => {
+      const valueA = a[field];
+      const valueB = b[field];
+      const comparison = valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
+      return direction === 'asc' ? comparison : -comparison;
+    });
+  });
 
   constructor(
     private workoutService: WorkoutService,
@@ -80,5 +98,21 @@ export class WorkoutsComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
+  }
+
+  setSort(field: SortField): void {
+    if (this.sortField() === field) {
+      this.sortDirection.set(this.sortDirection() === 'asc' ? 'desc' : 'asc');
+    } else {
+      this.sortField.set(field);
+      this.sortDirection.set('asc');
+    }
+  }
+
+  sortIndicator(field: SortField): string {
+    if (this.sortField() !== field) {
+      return '';
+    }
+    return this.sortDirection() === 'asc' ? ' ▲' : ' ▼';
   }
 }

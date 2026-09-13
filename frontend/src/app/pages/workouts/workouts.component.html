@@ -1,11 +1,11 @@
 <div class="page workouts-page">
   <div class="header-row">
-    <h1>Workouts</h1>
-    <div class="header-actions">
-        <a routerLink="/progress">Progress</a>
-        <button type="button" (click)="logout()">Log out</button>
+    <div class="header-left">
+      <h1>Workouts</h1>
+      <a routerLink="/progress" class="nav-link">Progress</a>
     </div>
-</div>
+    <button type="button" (click)="logout()">Log out</button>
+  </div>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="workout-form">
     <label>
@@ -56,21 +56,23 @@
     <p class="error">{{ errorMessage() }}</p>
   }
 
+  <p class="hint">Click a column header to sort the table.</p>
+
   <table class="workouts-table">
     <thead>
       <tr>
-        <th>Date</th>
-        <th>Type</th>
-        <th>Duration</th>
-        <th>Calories</th>
-        <th>Intensity</th>
-        <th>Fatigue</th>
+        <th (click)="setSort('performedAt')">Date{{ sortIndicator('performedAt') }}</th>
+        <th (click)="setSort('type')">Type{{ sortIndicator('type') }}</th>
+        <th (click)="setSort('durationMinutes')">Duration{{ sortIndicator('durationMinutes') }}</th>
+        <th (click)="setSort('calories')">Calories{{ sortIndicator('calories') }}</th>
+        <th (click)="setSort('intensity')">Intensity{{ sortIndicator('intensity') }}</th>
+        <th (click)="setSort('fatigue')">Fatigue{{ sortIndicator('fatigue') }}</th>
         <th>Notes</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      @for (workout of workouts(); track workout.id) {
+      @for (workout of sortedWorkouts(); track workout.id) {
         <tr>
           <td>{{ workout.performedAt | date:'dd.MM.yyyy HH:mm' }}</td>
           <td>{{ workout.type }}</td>
