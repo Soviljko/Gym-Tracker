@@ -1,0 +1,54 @@
+.progress-page {
+  max-width: 700px;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  button {
+    width: auto;
+    background: #6b7280;
+  }
+}
+
+.month-picker {
+  max-width: 220px;
+  margin-bottom: 1.5rem;
+}
+
+.progress-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+
+  th, td {
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+  }
+
+  th {
+    background: #f0f0f0;
+    font-weight: 600;
+  }
+
+  tbody tr:hover {
+    background: #f9fafb;
+  }
+}

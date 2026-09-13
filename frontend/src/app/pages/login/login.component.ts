@@ -13,6 +13,7 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent {
     form: FormGroup;
     errorMessage = signal('');
+    isSubmitting = signal(false);
 
     constructor(
         private fb: FormBuilder,
@@ -26,15 +27,19 @@ export class LoginComponent {
     }
 
     onSubmit(): void {
-        if(this.form.invalid){
+        if(this.form.invalid || this.isSubmitting()){
             return;
         }
 
         this.errorMessage.set('');
+        this.isSubmitting.set(true);
 
         this.authService.login(this.form.value).subscribe({
             next: () => this.router.navigateByUrl('/workouts'),
-            error: () => this.errorMessage.set("Wrong email or password.")
+            error: () => {
+                this.errorMessage.set("Wrong email or password.");
+                this.isSubmitting.set(false);
+            }
         });
     }
     

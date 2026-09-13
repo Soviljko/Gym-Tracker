@@ -1,0 +1,41 @@
+<div class="page progress-page">
+  <div class="header-row">
+    <h1>Progress</h1>
+    <div class="header-actions">
+      <a routerLink="/workouts">Workouts</a>
+      <button type="button" (click)="logout()">Log out</button>
+    </div>
+  </div>
+
+  <label class="month-picker">
+    Month
+    <input type="month" [(ngModel)]="selectedMonth" (change)="onMonthChange()" />
+  </label>
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  <table class="progress-table">
+    <thead>
+      <tr>
+        <th>Week</th>
+        <th>Workouts</th>
+        <th>Total duration</th>
+        <th>Avg. intensity</th>
+        <th>Avg. fatigue</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (week of summaries(); track week.weekStart) {
+        <tr>
+          <td>{{ week.weekStart | date:'dd.MM' }} - {{ week.weekEnd | date:'dd.MM.yyyy' }}</td>
+          <td>{{ week.workoutCount }}</td>
+          <td>{{ week.totalDurationMinutes }} min</td>
+          <td>{{ week.averageIntensity | number:'1.1-1' }}</td>
+          <td>{{ week.averageFatigue | number:'1.1-1' }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

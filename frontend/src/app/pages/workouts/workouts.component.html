@@ -1,0 +1,87 @@
+<div class="page workouts-page">
+  <div class="header-row">
+    <h1>Workouts</h1>
+    <div class="header-actions">
+        <a routerLink="/progress">Progress</a>
+        <button type="button" (click)="logout()">Log out</button>
+    </div>
+</div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="workout-form">
+    <label>
+      Type
+      <select formControlName="type">
+        <option value="Cardio">Cardio</option>
+        <option value="Strength">Strength</option>
+        <option value="Flexibility">Flexibility</option>
+      </select>
+    </label>
+
+    <label>
+      Date and time
+      <input type="datetime-local" formControlName="performedAt" />
+    </label>
+
+    <label>
+      Duration (min)
+      <input type="number" formControlName="durationMinutes" />
+    </label>
+
+    <label>
+      Calories
+      <input type="number" formControlName="calories" />
+    </label>
+
+    <label>
+      Intensity (1-10)
+      <input type="number" formControlName="intensity" min="1" max="10" />
+    </label>
+
+    <label>
+      Fatigue (1-10)
+      <input type="number" formControlName="fatigue" min="1" max="10" />
+    </label>
+
+    <label>
+      Notes
+      <textarea formControlName="notes"></textarea>
+    </label>
+
+    <button type="submit" [disabled]="form.invalid || isSubmitting()">
+      {{ isSubmitting() ? 'Adding...' : 'Add workout' }}
+    </button>
+  </form>
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  <table class="workouts-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Duration</th>
+        <th>Calories</th>
+        <th>Intensity</th>
+        <th>Fatigue</th>
+        <th>Notes</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (workout of workouts(); track workout.id) {
+        <tr>
+          <td>{{ workout.performedAt | date:'dd.MM.yyyy HH:mm' }}</td>
+          <td>{{ workout.type }}</td>
+          <td>{{ workout.durationMinutes }} min</td>
+          <td>{{ workout.calories }}</td>
+          <td>{{ workout.intensity }}</td>
+          <td>{{ workout.fatigue }}</td>
+          <td>{{ workout.notes }}</td>
+          <td><button type="button" (click)="onDelete(workout.id)">Delete</button></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

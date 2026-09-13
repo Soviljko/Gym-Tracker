@@ -16,7 +16,9 @@
       <p class="error">{{ errorMessage() }}</p>
     }
 
-    <button type="submit" [disabled]="form.invalid">Register</button>
+    <button type="submit" [disabled]="form.invalid || isSubmitting()">
+      {{ isSubmitting() ? 'Registering...' : 'Register' }}
+    </button>
   </form>
 
   <p>Already have an account? <a routerLink="/login">Sign in</a></p>

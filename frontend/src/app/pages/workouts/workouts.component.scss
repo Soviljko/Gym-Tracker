@@ -1,0 +1,80 @@
+.workouts-page {
+  max-width: 900px;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  button {
+    width: auto;
+    background: #6b7280;
+  }
+}
+
+.workout-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+
+  label:has(textarea),
+  button {
+    grid-column: 1 / -1;
+  }
+
+  button {
+    width: auto;
+    justify-self: start;
+    padding: 0.6rem 1.5rem;
+  }
+}
+
+.workouts-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+
+  th,
+  td {
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+  }
+
+  th {
+    background: #f0f0f0;
+    font-weight: 600;
+  }
+
+  tbody tr:hover {
+    background: #f9fafb;
+  }
+
+  button {
+    width: auto;
+    background: #dc2626;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}

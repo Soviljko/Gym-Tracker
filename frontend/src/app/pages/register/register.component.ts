@@ -13,6 +13,7 @@ import { AuthService } from '../../services/auth.service';
 export class RegisterComponent {
   form: FormGroup;
   errorMessage = signal('');
+  isSubmitting = signal(false);
 
   constructor(
     private fb: FormBuilder,
@@ -26,11 +27,12 @@ export class RegisterComponent {
   }
 
   onSubmit(): void {
-    if (this.form.invalid) {
+    if (this.form.invalid || this.isSubmitting()) {
       return;
     }
 
     this.errorMessage.set('');
+    this.isSubmitting.set(true);
 
     this.authService.register(this.form.value).subscribe({
       next: () => this.router.navigateByUrl('/workouts'),
@@ -38,6 +40,7 @@ export class RegisterComponent {
         this.errorMessage.set(
           err.status === 409 ? 'Email already registered.' : 'Error during registration.'
         );
+        this.isSubmitting.set(false);
       }
     });
   }
