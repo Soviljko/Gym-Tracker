@@ -1,3 +1,4 @@
+
 # Gym Tracker
 
 A gym workout tracking application. 
@@ -128,3 +129,11 @@ avoid revealing whether the resource exists).
   Swagger).
 - **Tests**: scoped to `WeeklySummaryCalculator`, the only piece of real algorithmic logic in the codebase.
   Everything else is a thin pass-through to EF Core / ASP.NET, verified manually end-to-end instead.
+  
+## Application Demo Video
+
+https://github.com/user-attachments/assets/b6d39cf1-2946-41f1-97ce-7fe4f59dc2be
+
+
+
+
